@@ -17,11 +17,6 @@ func main() {
 		}
 	}
 
-	checked := make([][]bool, len(lines))
-	for i := 0; i < len(lines); i++ {
-		checked[i] = make([]bool, len(lines[0]))
-	}
-
 	var bfsQueue [][]int
 	for i := 0; i < len(lines); i++ {
 		for j := 0; j < len(lines[0]); j++ {
@@ -31,7 +26,7 @@ func main() {
 		}
 	}
 
-	bfs(bfsQueue, checked, graphToZero)
+	bfs(bfsQueue, graphToZero)
 
 	zero := 0
 	for i := 0; i < len(lines); i++ {
@@ -91,11 +86,7 @@ func neighbourToDeleteToZero(lines []string, row, col int) int {
 	return count
 }
 
-// go bfs from starting cell
-// if current cell can't be removed, add adjesent not checked cells to queue
-// if current cell can be removed, remove it, decrement adjesent cells and add them to queue
-
-func bfs(bfsQueue [][]int, checked [][]bool, graphToZero [][]int) {
+func bfs(bfsQueue [][]int, graphToZero [][]int) {
 	for len(bfsQueue) > 0 {
 		node := bfsQueue[0]
 		bfsQueue = bfsQueue[1:]
@@ -126,11 +117,7 @@ func bfs(bfsQueue [][]int, checked [][]bool, graphToZero [][]int) {
 
 			if graphToZero[row][col] == 0 {
 				graphToZero[lookRow][lookCol] -= 1
-			}
-
-			if graphToZero[row][col] == 0 || !checked[lookRow][lookCol] {
 				bfsQueue = append(bfsQueue, []int{lookRow, lookCol})
-				checked[lookRow][lookCol] = true
 			}
 		}
 	}
