@@ -61,7 +61,7 @@ func getInput() []string {
 	return lines
 }
 
-func neighbourToDeleteToZero(lines []string, row, col int) int {
+func howManyPaperNeighbours(lines []string, row, col int) int {
 	if lines[row][col] == '.' {
 		return -1
 	}
