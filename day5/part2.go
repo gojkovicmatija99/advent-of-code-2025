@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	ranges, points := getInput()
+	ranges, _ := getInput()
 
 	sort.Slice(ranges, func(i, j int) bool {
 		return ranges[i][0] < ranges[j][0]
@@ -34,10 +34,8 @@ func main() {
 	ranges = ranges[:writeIdx]
 
 	fresh := 0
-	for i := 0; i < len(points); i++ {
-		if binarySearchRanges(ranges, points[i]) {
-			fresh++
-		}
+	for i := 0; i < len(ranges); i++ {
+		fresh += ranges[i][1] - ranges[i][0] + 1
 	}
 
 	fmt.Println(fresh)
@@ -76,23 +74,4 @@ func getInput() ([][]int, []int) {
 	}
 
 	return ranges, points
-}
-
-func binarySearchRanges(ranges [][]int, point int) bool {
-	low := 0
-	high := len(ranges) - 1
-	for low <= high {
-		currIdx := (low + high) / 2
-		if point >= ranges[currIdx][0] && point <= ranges[currIdx][1] {
-			return true
-		}
-
-		if point < ranges[currIdx][0] {
-			high = currIdx - 1
-		} else {
-			low = currIdx + 1
-		}
-	}
-
-	return false
 }
